@@ -6,4 +6,8 @@ export class Point {
         this.x = x;
         this.y = y;
     }
+
+    toString(): string {
+        return "Point(" + this.x + ", " + this.y + ")";
+    }
 }
