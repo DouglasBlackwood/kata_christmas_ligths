@@ -45,4 +45,8 @@ export class Grid {
 
         return nbLightsOn;
     }
+
+    isLigthOn(point: Point): boolean | undefined {
+        return this.data.get(point.toString())?.isOn;
+    }
 }
