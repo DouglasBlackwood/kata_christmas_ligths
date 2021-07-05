@@ -29,6 +29,24 @@ export class Grid {
         }
     }
 
+    turnOffThrough(from: Point, to: Point): void {
+        for (let x = from.x; x <= to.x; x++) {
+            for (let y = from.y; y <= to.y; y++) {
+                const point = new Point(x, y);
+                this.data.get(point.toString())?.turnOff();
+            }
+        }
+    }
+
+    toggleThrough(from: Point, to: Point): void {
+        for (let x = from.x; x <= to.x; x++) {
+            for (let y = from.y; y <= to.y; y++) {
+                const point = new Point(x, y);
+                this.data.get(point.toString())?.toggle();
+            }
+        }
+    }
+
     getFirstLight(): Light | undefined {
         const point = new Point(0, 0);
         return this.data.get(point.toString());
