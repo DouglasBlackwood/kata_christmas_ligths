@@ -1,8 +1,8 @@
-import { Light } from './ligth';
+import { BrightLight, Light } from './ligth';
 import { Point } from './point';
 
-export class Grid {
-    private data: Map<string, Light>;
+class Grid {
+    protected data: Map<string, Light>;
 
     constructor(nbX: number, nbY: number) {
         this.data = new Map();
@@ -10,10 +10,14 @@ export class Grid {
         for (let x = 0; x < nbX; x++) {
             for (let y = 0; y < nbY; y++) {
                 const point = new Point(x, y);
-                const ligth = new Light();
+                const ligth = this.createLight();
                 this.data.set(point.toString(), ligth);
             }
         }
+    }
+
+    protected createLight(): Light {
+        return new Light();
     }
 
     count(): number {
@@ -53,18 +57,38 @@ export class Grid {
     }
 
     countLightsOn(): number {
-        let nbLightsOn = 0;
+        let result = 0;
 
         for (const light of this.data.values()) {
             if (light.isOn) {
-                nbLightsOn++;
+                result++;
             }
         }
 
-        return nbLightsOn;
+        return result;
     }
 
     isLigthOn(point: Point): boolean | undefined {
         return this.data.get(point.toString())?.isOn;
     }
 }
+
+class BrightGrid extends Grid {
+    protected createLight(): BrightLight {
+        return new BrightLight();
+    }
+
+    getBrightness(): number {
+        let result = 0;
+
+        for (const light of this.data.values()) {
+            if (light instanceof BrightLight) {
+                result += light.brightness;
+            }
+        }
+
+        return result;
+    }
+}
+
+export { Grid, BrightGrid };
